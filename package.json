@@ -1,0 +1,9 @@
+{
+	"name": "Bid-Function",
+	"description": "Bid Function for the auction",
+	"author": "skinbasar.com",
+	"dependencies" : {
+		"express": "*",
+		"socket.io": "*"
+	}
+}

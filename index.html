@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+      #floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+    </style>
+  </head>
+  <body>
+      <div id="box" style="width:200px;height:100vh;border:1px solid #000;background-color: #fff;"><font size=6>
+        <a href="/account.php">My Account</a>
+          </br>
+          <form method="POST" action="itemadd.php">
+      <br>
+      <input id="Name" type= textarea name= "itemname"></input>
+        <br>
+        <input id="Kondition" type= textarea name= "kondition"></input>
+        <br>
+      <input id="Image" type= textarea name="imglink"></input>
+    <br>
+    <input id="Cost" type= textarea name="price"></input>
+    <br>
+      <input id="Steamprice" type= textarea name="steamprice"></input>
+    <br>
+
+      <input id="Endtime" type= textarea name="endtime"></input>
+    <br>
+      <input id="Itemid" type= textarea name="itemid"></input>
+      </font>
+<input type=submit value="Item hinzufugen">
+      </form>
+      </div>
+
+
+
+    <div id="map"></div>
+    <script type="text/javascript">  
+        
+    </script>
+    <script src="js/script.js"></script>
+
+  </body>
+</html>

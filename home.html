@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+
+      <script src="jquery-2.2.3.min.js"></script>
+      <script src="script.js"></script>
+      <script src="freewall.js"></script>
+      <script src="jquery.countdown.js"></script>
+      <script src="node_modules/socket.io-client/socket.io.js"></script>
+      <style type="text/css">
+    #container {
+      width: 80%;
+      margin: auto;
+    }
+    .item {
+      background: rgb(135, 199, 135);
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+      <script>
+
+      </script>
+
+      
+      
+  </head>
+  <body>      
+
+<div id='cssmenu'>
+<ul>
+   <li><a href='#'><span>Home</span></a></li>
+   <li class='active has-sub'><a href='#'><span>Products</span></a>
+      <ul>
+         <li class='has-sub'><a href='#'><span>Product 1</span></a>
+            <ul>
+               <li><a href='#'><span>Sub Product</span></a></li>
+               <li class='last'><a href='#'><span>Sub Product</span></a></li>
+            </ul>
+         </li>
+         <li class='has-sub'><a href='#'><span>Product 2</span></a>
+            <ul>
+               <li><a href='#'><span>Sub Product</span></a></li>
+               <li class='last'><a href='#'><span>Sub Product</span></a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li><a href='#'><span>About</span></a></li>
+   <li class='last'><a href='#'><span>Contact</span></a></li>
+</ul>
+</div>
+
+      
+      <br>
+      <br>
+      
+      <br>
+      
+      
+      
+      
+      <div class= "owl-carousel" id="items">
+
+      </div>
+      
+      <br>
+      <br>
+      <br>
+      
+      <div id="container" class="free-wall">
+      </div>
+
+            <br>
+      <br>
+      <br>    
+
+    <script type="text/javascript">  
+        var wall=new Freewall("#container");
+        wall.reset({
+				selector: '.cell',
+				animate: true,
+				cellW: 100,
+				cellH: 100,
+				onResize: function() {
+					wall.refresh();
+				}
+			});
+			wall.fitWidth();
+			// for scroll bar appear;
+			$(window).trigger("resize");
+        $(document).ready(function(){
+            
+            
+            $.ajax({
+            url: 'itemshow.php',
+            type:'GET',
+            dataType: 'json',
+            success: function(output_string){
+                    console.log(output_string);
+                var x=0;
+                    $.each(output_string, function(index){
+                        var str='<div class="item">'+output_string[index].itemname+'<br>'+output_string[index].kondition+'<br>'+output_string[index].price+'<br>'+output_string[index].steamprice+'<br><div id="time'+x+'">'+output_string[index].endtime+'</div><br><input class="bid-button" id="'+output_string[index].itemid+'" type="button" value="Add 10 seconds"></div>';
+                       // $('#item').append(str);
+                        //$('.owl-carousel').trigger('add.owl.carousel',[str,index]).trigger('refresh.owl.carousel');
+                        
+                        console.log(output_string[index].itemid);
+                        var tmer='#time'+x;
+                        
+                        x++;
+                        wall.appendBlock(str);
+                        $(tmer).countdown(output_string[index].endtime, function(event){
+                            $(this).html(event.strftime('%H:%M:%S'));
+                        });
+                        
+                        //setInterval(function(){getTime(output_string[index].itemid,tmer);}, 1000);
+                    });
+                },
+                    error: function (xhr, ajaxOptions, thrownError){
+                    console.log(xhr.statusText);
+                    console.log(thrownError);
+  
+                    }
+    }); 
+            
+            var socket = io.connect("localhost:3000");
+          $(document).on("click",".bid-button",function(){
+              var id= this.id;
+             console.log("CLICK "+id); 
+              var timerid= document.getElementById(id).previousSibling.previousSibling.getAttribute("id");
+           socket.emit('status added',{itemid:id, tmerid:timerid});
+          });
+          socket.on('refresh time',function(msg){
+            console.log(msg);
+              $("#"+msg.tmerid).countdown(msg.newendtime);
+          });
+            
+            
+        });
+        
+
+        
+    </script>
+
+
+  </body>
+</html>
