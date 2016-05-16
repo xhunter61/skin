@@ -4,7 +4,7 @@ var mysql     =     require("mysql");
 var http      =     require('http').Server(app);
 var io        =     require("socket.io").listen(http);
 var dateFormat= require("dateformat");
-http.liste(process.env.PORT||3000);
+http.listen(process.env.PORT||3000);
 
 var timeresponse={itemid: "", tmerid:"", newendtime:""};
 
