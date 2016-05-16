@@ -222,7 +222,7 @@
                     }
     }); 
             
-            var socket = io.connect("skinbasar.herokuapp.com:3000"); //change to localhost:3000
+            var socket = io.connect(window.location.hostname); //change to localhost:3000
           $(document).on("click",".ph-button.ph-btn-red",function(){
               var id= this.id;
              console.log("CLICK "+id); 
