@@ -93,10 +93,10 @@
 	}  else {
         include ('steamauth/userInfo.php');
         echo "<li class='dropdown' id='steam' title='".$steamprofile['avatarmedium']."' name='".$steamprofile['steamid']."'><a href='#'class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><img src='".$steamprofile['avatar'].">'><span class='caret'></span></a><ul id='profilenav' class='dropdown-menu'></span></a><li><a href='?logout'>Logout</a></li></li></li></ul>";
-	define('DB_HOST', 'sql7.freemysqlhosting.net');
-	define('DB_NAME', 'sql7119806');
-	define('DB_USER','sql7119806');
-	define('DB_PASSWORD','lzmjaK2JC2');
+	define('DB_HOST', 'eu-cdbr-west-01.cleardb.com');
+	define('DB_NAME', 'heroku_1ed81913353afff');
+	define('DB_USER','b16f3dd482fc76');
+	define('DB_PASSWORD','d96171c8');
 
         $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " .     mysql_error());
         $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
