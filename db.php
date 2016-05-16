@@ -1,15 +1,17 @@
 <?php
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'itemlist');
+define('DB_NAME', 'users');
 define('DB_USER','root');
 define('DB_PASSWORD','');
 
 $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " . mysql_error());
 $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
 
-$sql="SELECT * from itemlist LEFT JOIN users ON itemlist.currentownerid=users.steamid
-";
+$itemid=$_GET['itid'];
+
+$sql="SELECT Endtime FROM itemlist WHERE Endtime IS NOT NULL AND itemid=".strval($itemid);
+
 
 $result = mysql_query($sql); //$result is an array
 
@@ -22,20 +24,7 @@ $return_arr=array();
 
 while($row = mysql_fetch_array($result))
   {
-
-
-    
-    $row_array['itemname']=$row['Itemname'];
-    $row_array['kondition']=$row['Kondition'];
-    $row_array['imagelink']=$row['Imagelink'];
-    $row_array['price']=$row['Price'];
-    $row_array['steamprice']=$row['Steamprice'];
     $row_array['endtime']=$row['Endtime'];
-    $row_array['itemid']=$row['itemid'];
-    $row_array['currentprice']=$row['currentprice'];
-    $row_array['avatar']=$row['avatar'];
-    $row_array['steamname']=$row['steamname'];
-
     
     array_push($return_arr,$row_array);
 

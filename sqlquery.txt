@@ -1,0 +1,35 @@
+SELECT * FROM users WHERE steamid=(SELECT currentownerid FROM itemlist WHERE itemid=11114) AND coins>=(SELECT price FROM itemlist WHERE itemid=11114)
+
+
+
+
+SELECT steamname, avatar FROM users WHERE steamid=(SELECT currentownerid FROM itemlist WHERE itemid=$itemid) 	|	=query für die anzeige des höchstbietenden
+
+UPDATE users  SET coins=coins-$coins WHERE steamid=$steamid AND coins>=$price
+Query für die bieteabgabe
+
+
+UPDATE itemlist SET currentprice=currentprice + 0.01, currentownerid=$steamid WHERE itemid=$itemid
+Query um den aktuellen höchstbietenden zu speichern
+
+
+console.log(timeresponse);        
+connection.query("SELECT steamname FROM users WHERE steamid="+timeresponse.currentownerid,function(err,rows){
+            //connection.release();
+    //console.log(rows);
+            timeresponse.steamname=rows[0].steamname.value;
+            
+            
+            if(!err) {
+              callback(true);
+            }
+        });
+
+
+
+SELECT * from itemlist LEFT JOIN users ON itemlist.currentownerid=users.steamid WHERE Endtime>CURRENT_TIMESTAMP ORDER BY Endtime DESC
+
+
+SELECT * from itemlist LEFT JOIN users ON itemlist.currentownerid=users.steamid WHERE Endtime>CURRENT_TIMESTAMP ORDER BY itemlist.itemid ASC 
+
+SELECT * from itemlist LEFT JOIN users ON itemlist.currentownerid=users.steamid ORDER BY itemlist.itemid ASC
