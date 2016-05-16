@@ -4,8 +4,12 @@ var mysql     =     require("mysql");
 var http      =     require('http').Server(app);
 var io        =     require("socket.io").listen(http);
 var dateFormat= require("dateformat");
+<<<<<<< HEAD
 var price=0;
 var steamid="";
+=======
+http.listen(process.env.PORT||3000);
+>>>>>>> origin/master
 
 
 var timeresponse={itemid: "", tmerid:"", newendtime:"", currentprice:"", currentownerid:"", currentownderavatar:"", steamname:"", success:""};
@@ -13,12 +17,17 @@ var timeresponse={itemid: "", tmerid:"", newendtime:"", currentprice:"", current
 /* Creating POOL MySQL connection.*/
 
 var pool    =    mysql.createPool({
+<<<<<<< HEAD
       connectionLimit   :   10000,
       host              :   'localhost',
+=======
+      connectionLimit   :   100,
+      host              :   'sql7.freemysqlhosting.net',
+>>>>>>> origin/master
       port              :   '3306',
-      user              :   'root',
-      password          :   '',
-      database          :   'itemlist',
+      user              :   'sql7119806',
+      password          :   'lzmjaK2JC2',
+      database          :   'sql7119806',
       datestrings       :   'DATETIME',
       debug             :   false
 });
