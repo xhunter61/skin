@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 define('DB_HOST', 'sql7.freemysqlhosting.net');
 define('DB_NAME', 'sql7119806');
