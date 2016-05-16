@@ -44,7 +44,7 @@ while($row = mysql_fetch_array($result))
   }
 
 echo json_encode($return_arr);
-
+echo ("<script>console.log('".json_encode($return_arr)."')</script>");
 mysql_close($con);
 
 ?>
