@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-define('DB_HOST', 'sql7.freemysqlhosting.net');
+define('DB_HOST', 'https://sql7.freemysqlhosting.net');
 define('DB_NAME', 'sql7119806');
 define('DB_USER','sql7119806');
 define('DB_PASSWORD','lzmjaK2JC2');
