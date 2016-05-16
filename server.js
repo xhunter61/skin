@@ -11,11 +11,11 @@ var timeresponse={itemid: "", tmerid:"", newendtime:""};
 
 var pool    =    mysql.createPool({
       connectionLimit   :   100,
-      host              :   'localhost',
+      host              :   'sql7.freemysqlhosting.net',
       port              :   '3306',
-      user              :   'root',
-      password          :   '',
-      database          :   'itemlist',
+      user              :   'sql7119806',
+      password          :   'lzmjaK2JC2',
+      database          :   'sql7119806',
       datestrings       :   'DATETIME',
       debug             :   false
 });
