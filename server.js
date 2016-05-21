@@ -7,7 +7,7 @@ var dateFormat= require("dateformat");
 var price=0;
 var steamid="";
 
-http.listen(process.env.PORT||3000);
+http.listen(process.env.PORT||5000);
 io.configure(function () { 
       io.set("transports", ["xhr-polling"]); 
       io.set("polling duration", 10); 
