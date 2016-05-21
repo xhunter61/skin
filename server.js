@@ -4,30 +4,22 @@ var mysql     =     require("mysql");
 var http      =     require('http').Server(app);
 var io        =     require("socket.io").listen(http);
 var dateFormat= require("dateformat");
-<<<<<<< HEAD
 var price=0;
 var steamid="";
-=======
-http.listen(process.env.PORT||3000);
->>>>>>> origin/master
 
 
-var timeresponse={itemid: "", tmerid:"", newendtime:"", currentprice:"", currentownerid:"", currentownderavatar:"", steamname:"", success:""};
+
+var timeresponse={itemid: "", tmerid:"", newendtime:"", currentprice:"", currentownerid:"", currentownderavatar:"", steamname:"", success:"false"};
 
 /* Creating POOL MySQL connection.*/
 
 var pool    =    mysql.createPool({
-<<<<<<< HEAD
-      connectionLimit   :   10000,
-      host              :   'localhost',
-=======
       connectionLimit   :   100,
-      host              :   'sql7.freemysqlhosting.net',
->>>>>>> origin/master
+      host              :   'eu-cdbr-west-01.cleardb.com',
       port              :   '3306',
-      user              :   'sql7119806',
-      password          :   'lzmjaK2JC2',
-      database          :   'sql7119806',
+      user              :   'b16f3dd482fc76',
+      password          :   'd96171c8',
+      database          :   'heroku_1ed81913353afff',
       datestrings       :   'DATETIME',
       debug             :   false
 });
@@ -69,7 +61,7 @@ var add_status = function (status,callback) {
           callback(false);
           return;
         }
-            connection.query("UPDATE itemlist SET Endtime=DATE_ADD(Endtime, INTERVAL 10 second) WHERE Endtime IS NOT NULL AND itemid="+status.itemid,function(err,rows){
+            connection.query("UPDATE itemlist SET Endtime=DATE_ADD(Endtime, INTERVAL 10 second) WHERE Endtime IS NOT NULL AND itemid="+status.itemid+" AND itemactive=0",function(err,rows){
             //connection.release();
             
             if(!err) {
@@ -79,9 +71,13 @@ var add_status = function (status,callback) {
         
 
         
-connection.query("UPDATE itemlist SET currentprice=currentprice + 0.01, currentownerid="+status.steamid+" WHERE itemid="+status.itemid+" AND Price<=(SELECT coins FROM users WHERE steamid="+status.steamid+")"
+connection.query("UPDATE itemlist SET currentprice=currentprice + 0.01, currentownerid="+status.steamid+" WHERE itemid="+status.itemid+" AND Price<=(SELECT coins FROM users WHERE steamid="+status.steamid+") AND itemactive=0"
 ,function(err,rows){
             //connection.release();
+        if(rows.changedRows==1){
+        timeresponse.success=true;
+        }else{
+            timeresponse.success=false;}
             if(!err) {
                 
               //callback(true);
@@ -98,7 +94,7 @@ connection.query("UPDATE itemlist SET currentprice=currentprice + 0.01, currento
         });
         
         
-        connection.query("UPDATE users SET coins=coins-(SELECT Price FROM itemlist WHERE itemid="+status.itemid+") WHERE steamid="+status.steamid+" AND coins>=(SELECT Price FROM itemlist WHERE itemid="+status.itemid+")",function(err,rows){
+        connection.query("UPDATE users SET coins=coins-(SELECT Price FROM itemlist WHERE itemid="+status.itemid+") WHERE steamid="+status.steamid+" AND coins>=(SELECT Price FROM itemlist WHERE itemid="+status.itemid+") AND 0=(SELECT itemactive FROM itemlist WHERE itemid="+status.itemid+")",function(err,rows){
             //connection.release();
             console.log(rows.changedRows);
             

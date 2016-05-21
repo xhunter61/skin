@@ -8,7 +8,7 @@ define('DB_PASSWORD','d96171c8');
 $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " . mysql_error());
 $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
 
-$sql="SELECT * from itemlist LEFT JOIN users ON itemlist.currentownerid=users.steamid WHERE itemactive=0";
+$sql="SELECT * from itemlist LEFT JOIN users ON itemlist.currentownerid=users.steamid WHERE itemactive=1";
 
 $result = mysql_query($sql); //$result is an array
 

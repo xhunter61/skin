@@ -70,8 +70,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="home.php">Home</a></li>
-            <li><a href="past.php">Past Auctions</a></li>
+            <li ><a href="home.php">Home</a></li>
+            <li class="active"><a href="past.php">Past Auctions</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -183,7 +183,7 @@ define('DB_PASSWORD','d96171c8');
             
             
             $.ajax({
-            url: 'itemshow.php',
+            url: 'getpast.php',
             type:'GET',
             dataType: 'json',
             success: function(output_string){
@@ -203,7 +203,7 @@ define('DB_PASSWORD','d96171c8');
                         }else{
                          owner=output_string[index].steamname   
                         }
-                        var str='<div align="center" class="item"><h3>'+output_string[index].itemname+'</h3><h4>'+output_string[index].kondition+'</h4>'+output_string[index].price+'<br>'+output_string[index].steamprice+'<br><div id="time'+x+'">'+output_string[index].endtime+'</div><div id="price'+x+'">'+output_string[index].currentprice+'</div><div id="owner'+x+'">'+owner+'</div><img src="'+ava+'"></img><br><input class="ph-button ph-btn-red" id="'+output_string[index].itemid+'" type="button" value="Bid"></div>';
+                        var str='<div align="center" class="item"><h3>'+output_string[index].itemname+'</h3><h4>'+output_string[index].kondition+'</h4>'+output_string[index].price+'<br>'+output_string[index].steamprice+'<br><div id="time'+x+'">'+output_string[index].endtime+'</div><div id="price'+x+'">'+output_string[index].currentprice+'</div><div id="owner'+x+'">'+owner+'</div><img src="'+ava+'"></img><br></div>';
                        // $('#item').append(str);
                         //$('.owl-carousel').trigger('add.owl.carousel',[str,index]).trigger('refresh.owl.carousel');
                         
@@ -226,38 +226,10 @@ define('DB_PASSWORD','d96171c8');
                     }
     }); 
             
-            var socket = io.connect("localhost:3000"); //change to localhost:3000
-          $(document).on("click",".ph-button.ph-btn-red",function(){
-              var id= this.id;
-             console.log("CLICK "+id); 
-              var timerid= document.getElementById(id).previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.getAttribute("id");
-              console.log(timerid);
-              //var priceid=document.getElementById(id)
-              var avatarlink=document.getElementById("steam").getAttribute("title"); 
-              var steamid=document.getElementById("steam").getAttribute("name"); 
-           socket.emit('status added',{itemid:id, tmerid:timerid, steamid: steamid, avatar: avatarlink});
-          });
-          socket.on('refresh time',function(msg){
-            //console.log(msg);
-              $("#"+msg.tmerid).countdown(msg.newendtime);
-              var fixedprice=parseFloat(msg.currentprice).toFixed(2);
-              document.getElementById(msg.tmerid).nextSibling.innerHTML=fixedprice;
-              document.getElementById(msg.tmerid).nextSibling.nextSibling.innerHTML=msg.steamname;
-              document.getElementById(msg.tmerid).nextSibling.nextSibling.nextSibling.setAttribute("src", msg.currentownderavatar);
-            
-            if(msg.success==false){
-                console.log("Item expired");
-                swal("Time up", "The item has been sold!", "error");
-            }else{
-             swal("Success", "Your bid has been accepted", "success");   
-            }
-              
-          });
-            
+           
             
         });
         
-   // "<ul><li class='last'><a href='#'>".logoutbutton()."</a></li></ul"
         
     </script>
       
