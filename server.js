@@ -6,15 +6,14 @@ var io        =     require("socket.io").listen(http);
 var dateFormat= require("dateformat");
 var price=0;
 var steamid="";
-<<<<<<< HEAD
-=======
+
 http.listen(process.env.PORT||3000);
 io.configure(function () { 
       io.set("transports", ["xhr-polling"]); 
       io.set("polling duration", 10); 
     });
 
->>>>>>> origin/master
+
 
 
 
@@ -24,11 +23,7 @@ var timeresponse={itemid: "", tmerid:"", newendtime:"", currentprice:"", current
 
 var pool    =    mysql.createPool({
       connectionLimit   :   100,
-<<<<<<< HEAD
       host              :   'eu-cdbr-west-01.cleardb.com',
-=======
-      host              :   'sql7.freemysqlhosting.net',
->>>>>>> origin/master
       port              :   '3306',
       user              :   'b16f3dd482fc76',
       password          :   'd96171c8',
