@@ -1,11 +1,13 @@
 <?php
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 define('DB_HOST', 'eu-cdbr-west-01.cleardb.com');
 define('DB_NAME', 'heroku_1ed81913353afff');
 define('DB_USER','b16f3dd482fc76');
 define('DB_PASSWORD','d96171c8');
 
-$con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " . mysql_error());
+$con=@mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " . mysql_error());
 $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
 
 $sql="SELECT * from itemlist LEFT JOIN users ON itemlist.currentownerid=users.steamid WHERE itemactive=0";
@@ -41,7 +43,7 @@ while($row = mysql_fetch_array($result))
   }
 
 echo json_encode($return_arr);
-
+echo ("<script>console.log('".json_encode($return_arr)."')</script>");
 mysql_close($con);
 
 ?>

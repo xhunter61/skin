@@ -1,7 +1,7 @@
 <?php
 //Version 3.1.1
 $steamauth['apikey'] = "C8A09C6806D2705F00B34B32A16A9850"; // Your Steam WebAPI-Key found at http://steamcommunity.com/dev/apikey
-$steamauth['domainname'] = "localhost:8080/"; // change to localhost:8080
+$steamauth['domainname'] = "skinbasar.herokuapp.com/"; // change to localhost:8080
 $steamauth['logoutpage'] = "home.php"; // Page to redirect to after a successfull logout (from the directory the SteamAuth-folder is located in) - NO slash at the beginning!
 $steamauth['loginpage'] = "home.php"; // Page to redirect to after a successfull login (from the directory the SteamAuth-folder is located in) - NO slash at the beginning!
 
