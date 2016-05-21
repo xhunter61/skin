@@ -95,33 +95,26 @@
         //loginbutton("small");
 	}  else {
         include ('steamauth/userInfo.php');
-<<<<<<< HEAD
         echo "<li class='dropdown' id='steam' title='".$steamprofile['avatarmedium']."' name='".$steamprofile['steamid']."'><a href='#'class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false' style='padding-top:0px;padding-bottom:0px;line-height:50px'><img src='".$steamprofile['avatar'].">'><span class='caret'></span></a><ul id='profilenav' class='dropdown-menu'><li><a href='?logout'>Logout</a></li></ul></li>";
 define('DB_HOST', 'eu-cdbr-west-01.cleardb.com');
 define('DB_NAME', 'heroku_1ed81913353afff');
 define('DB_USER','b16f3dd482fc76');
 define('DB_PASSWORD','d96171c8');
-=======
-        echo "<li class='dropdown' id='steam' title='".$steamprofile['avatarmedium']."' name='".$steamprofile['steamid']."'><a href='#'class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><img src='".$steamprofile['avatar'].">'><span class='caret'></span></a><ul id='profilenav' class='dropdown-menu'></span></a><li><a href='?logout'>Logout</a></li></li></li></ul>";
-	define('DB_HOST', 'eu-cdbr-west-01.cleardb.com');
-	define('DB_NAME', 'heroku_1ed81913353afff');
-	define('DB_USER','b16f3dd482fc76');
-	define('DB_PASSWORD','d96171c8');
->>>>>>> origin/master
 
-        $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " .     mysql_error());
-        $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
+
+        $con=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " .     mysql_error());
+        $db=mysqli_select_db($con,DB_NAME) or die("Failed to connect to MySQL: " . mysqli_error());
 
 
         $sql="SELECT * FROM users WHERE steamid=".$steamprofile['steamid'];
 
-        $result = mysql_query($sql); //$result is an array
+        $result = mysqli_query($con,$sql); //$result is an array
 
-        $num_rows=mysql_num_rows($result);
+        $num_rows=mysqli_num_rows($result);
         $coins="10000";
         
         if($num_rows>0){
-            while($row = mysql_fetch_array($result))
+            while($row = mysqli_fetch_array($result))
             {
                 echo "<li><button type='button' class='btn btn-link navbar-btn'><i class='fa fa-diamond' aria-hidden='true'> ".$row['coins']."</i></button></li>";
 
@@ -131,7 +124,7 @@ define('DB_PASSWORD','d96171c8');
             $sql="INSERT INTO `users`(`steamname`, `steamid`, `avatar`,`coins`) VALUES ('".$steamprofile['personaname']."','".$steamprofile['steamid']."','".$steamprofile['avatarmedium']."','10000')";
             //echo $sql;
             echo "<p id='coins' class='navbar-text'><i class='fa fa-diamond' aria-hidden='true'>0</i></p>";
-            $result=mysql_query($sql);
+            $result=mysqli_query($sql);
             if($result)
 	{
 	    //echo "Successfully updated database";
@@ -147,7 +140,7 @@ define('DB_PASSWORD','d96171c8');
 
         
 
-        mysql_close($con);
+        mysqli_close($con);
     
     }
             ?>
