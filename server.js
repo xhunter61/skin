@@ -8,7 +8,7 @@ var price=0;
 var steamid="";
 
 http.listen(process.env.PORT||5000);
-io.configure(function () { 
+io.use(function () { 
       io.set("transports", ["xhr-polling"]); 
       io.set("polling duration", 10); 
     });
