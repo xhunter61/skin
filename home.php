@@ -227,7 +227,7 @@ define('DB_PASSWORD','d96171c8');
                     }
     }); 
             
-            var socket = io.connect("https://skinbasar.herukoapp.com:3000"); //change to localhost:3000
+            var socket = io.connect(window.location.hostname); //change to localhost:3000
           $(document).on("click",".ph-button.ph-btn-red",function(){
               var id= this.id;
              console.log("CLICK "+id); 
