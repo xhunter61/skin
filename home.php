@@ -100,10 +100,6 @@ define('DB_HOST', 'eu-cdbr-west-01.cleardb.com');
 define('DB_NAME', 'heroku_1ed81913353afff');
 define('DB_USER','b16f3dd482fc76');
 define('DB_PASSWORD','d96171c8');
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 
         $con=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " .     mysql_error());
