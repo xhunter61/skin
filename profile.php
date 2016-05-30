@@ -16,7 +16,9 @@
       
 <link rel="stylesheet" href="button.css">
     <link rel="stylesheet" href="sweetalert.css">
-
+<link rel="stylesheet" type="text/css" href="table.css">
+  
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
 
 <!-- Das neueste kompilierte und minimierte JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -41,27 +43,15 @@
       height: 300px;
     }
     body{
-    background-color: #263238;
+    background-color: #252839;
     color: #000;
   }
-          
-.navbar-default {
-    background: #263238; 
-    border-color: #E7E7E7;
-}
-.navbar-default .navbar-nav > li > a {
-    color: #777777;
-}
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-    background-color: #263238;
-    color: #555555;
-}
           
    
 
   </style>
       <script>
-          //change background color in css 
+
       </script>
 <style src="button.css"></style>
       
@@ -69,7 +59,7 @@
   </head>
   <body bgcolor="#e68a00"> 
       
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -82,8 +72,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="home.php">Home</a></li>
-            <li><a href="past.php">Past Auctions</a></li>
+            <li ><a href="home.php">Home</a></li>
+            <li class="active"><a href="past.php">Past Auctions</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -113,9 +103,7 @@ define('DB_NAME', 'itemlist');
 define('DB_USER','root');
 define('DB_PASSWORD','');
 
-
-
-        $con=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " .     mysql_error());
+        $con=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " .     mysqli_error());
         $db=mysqli_select_db($con,DB_NAME) or die("Failed to connect to MySQL: " . mysqli_error());
 
 
@@ -137,7 +125,7 @@ define('DB_PASSWORD','');
             $sql="INSERT INTO `users`(`steamname`, `steamid`, `avatar`,`coins`) VALUES ('".$steamprofile['personaname']."','".$steamprofile['steamid']."','".$steamprofile['avatarmedium']."','10000')";
             //echo $sql;
             echo "<p id='coins' class='navbar-text'><i class='fa fa-diamond' aria-hidden='true'>0</i></p>";
-            $result=mysqli_query($con,$sql);
+            $result=mysqli_query($sql);
             if($result)
 	{
 	    //echo "Successfully updated database";
@@ -148,11 +136,11 @@ define('DB_PASSWORD','');
 	}
 
         }
-        //echo session_id();
-        $sql="UPDATE users SET phpsessid='".session_id()."' WHERE steamid=".$steamprofile['steamid'];
-        //echo $sql;
-        $result=mysqli_query($con,$sql);
-        //echo $result;
+
+        
+
+        
+
         mysqli_close($con);
     
     }
@@ -171,16 +159,38 @@ define('DB_PASSWORD','');
       
       <br>
     
-      
-      <div id="container" class="free-wall">
+      <div id="box" style="width:auto;height:auto;border:1px solid #000;background-color: #fff; text-align: left;">
+      <table id="datatable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Weapon</th>
+                <th>Skin</th>
+                <th>Wear</th>
+                <th>Price</th>
+                <th>Paid</th>
+                <th>Pay</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Weapon</th>
+                <th>Skin</th>
+                <th>Wear</th>
+                <th>Price</th>
+                <th>Paid</th>
+                <th>Pay</th>
+            </tr>
+        </tfoot>
+    </table>
       </div>
-
             <br>
       <br>
       <br>    
 
-    <script type="text/javascript">  
-        console.log(getCookie("PHPSESSID"));
+    <script type="text/javascript"> 
+        
+        var dtable=$('#datatable').DataTable(); 
+        
         var wall=new Freewall("#container");
         wall.reset({
 				selector: '.cell',
@@ -198,41 +208,29 @@ define('DB_PASSWORD','');
             
             
             $.ajax({
-            url: 'itemshow.php',
+            url: 'getprofile.php',
             type:'GET',
             dataType: 'json',
             success: function(output_string){
-                    //console.log(output_string);
-                var x=0;
-                    $.each(output_string, function(index){
-                        var ava="";
-                        var owner="";
-                        if(output_string[index].avatar==null){
-                         ava="default.jpg";   
-                        }else{
-                         ava=output_string[index].avatar;
-                        }
-                        
-                        if(output_string[index].steamname==null){
-                         owner="No Bidder";   
-                        }else{
-                         owner=output_string[index].steamname   
-                        }
-                        var str='<div align="center" class="item"><h3>'+output_string[index].itemname+'</h3><h4>'+output_string[index].kondition+'</h4>'+output_string[index].price+'<br>'+output_string[index].steamprice+'<br><div id="time'+x+'">'+output_string[index].endtime+'</div><div id="price'+x+'">'+output_string[index].currentprice+'</div><div id="owner'+x+'">'+owner+'</div><img src="'+ava+'"></img><br><input class="ph-button ph-btn-red" id="'+output_string[index].itemid+'" type="button" value="Bid"></div>';
-                       // $('#item').append(str);
-                        //$('.owl-carousel').trigger('add.owl.carousel',[str,index]).trigger('refresh.owl.carousel');
-                        
-                        //console.log(output_string[index].itemid);
-                        var tmer='#time'+x;
-                        
-                        x++;
-                        wall.appendBlock(str);
-                        $(tmer).countdown(output_string[index].endtime, function(event){
-                            $(this).html(event.strftime('%H:%M:%S'));
-                        });
-                        
-                        //setInterval(function(){getTime(output_string[index].itemid,tmer);}, 1000);
-                    });
+                console.log(output_string);
+                for( var i=0;i<output_string.length;i++){
+                    var status_paid="";
+                    var btn="<input class='ph-button ph-btn-green' id='"+output_string[i].Itemid+"' type='button' value='Pay'>"
+                    if(output_string[i].Name==1){
+                        status_paid="<i class='fa fa-check fa-1'></i>";
+                    }else{
+                         status_paid="<i class='fa fa-times fa-1'></i>";
+                    }
+                    
+                 dtable.row.add([
+                     output_string[i].Weapon,
+                     output_string[i].Skin,
+                     output_string[i].Wear,
+                     output_string[i].Price,
+                    status_paid,
+                    btn]).draw();
+                }
+       
                 },
                     error: function (xhr, ajaxOptions, thrownError){
                     console.log(xhr.statusText);
@@ -241,55 +239,10 @@ define('DB_PASSWORD','');
                     }
     }); 
             
-            var socket = io.connect("localhost:3000"); //change to localhost:3000
-          $(document).on("click",".ph-button.ph-btn-red",function(){
-              var id= this.id;
-             console.log("CLICK "+id); 
-              var timerid= document.getElementById(id).previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.getAttribute("id");
-              console.log(timerid);
-              //var priceid=document.getElementById(id)
-              var avatarlink=document.getElementById("steam").getAttribute("title"); 
-              var steamid=document.getElementById("steam").getAttribute("name"); 
-           socket.emit('status added',{itemid:id, tmerid:timerid, steamid: steamid, avatar: avatarlink, auth: getCookie("PHPSESSID")});
-          });
-          socket.on('refresh time',function(msg){
-            //console.log(msg);
-              $("#"+msg.tmerid).countdown(msg.newendtime);
-              var fixedprice=parseFloat(msg.currentprice).toFixed(2);
-              document.getElementById(msg.tmerid).nextSibling.innerHTML=fixedprice;
-              document.getElementById(msg.tmerid).nextSibling.nextSibling.innerHTML=msg.steamname;
-              document.getElementById(msg.tmerid).nextSibling.nextSibling.nextSibling.setAttribute("src", msg.currentownderavatar);
-            
-            if(msg.success==false){
-                console.log("Item expired");
-                swal("Time up", "The item has been sold!", "error");
-            }else if(msg.success==true && msg.currentownerid==document.getElementById("steam").getAttribute("name")){
-             swal("Success", "Your bid has been accepted", "success");   
-            }
-              
-          });
-          socket.on('auth fail',function(msg){  
-             swal("Authentication Fail", "It appears you are not using the real steam id", "error"); 
-          });
-            
+           
+   
         });
         
-   // "<ul><li class='last'><a href='#'>".logoutbutton()."</a></li></ul"
-        
-        function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length,c.length);
-        }
-    }
-    return "";
-}
         
     </script>
       

@@ -36,14 +36,33 @@
       margin: auto;
     }
     .item {
-      background: rgb(103,112,119);
+      background: linear-gradient(141deg, #263238, #607d8b) fixed;
       width: 300px;
       height: 300px;
+
+    }
+    .item:hover{
+     border-color: #00838F;  
+     border-style: solid;
+     border-width: thin;
     }
     body{
-    background-color: #252839;
-    color: #000;
+    background-color: #263238;
+    background: linear-gradient(141deg, #263238, #607d8b) fixed;
+        color: #000;
   }
+          
+.navbar-default {
+    background: #263238; 
+    border-color: #546e7a;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #777777;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #263238;
+    color: #555555;
+}
           
    
 
@@ -57,7 +76,7 @@
   </head>
   <body bgcolor="#e68a00"> 
       
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -96,10 +115,10 @@
 	}  else {
         include ('steamauth/userInfo.php');
         echo "<li class='dropdown' id='steam' title='".$steamprofile['avatarmedium']."' name='".$steamprofile['steamid']."'><a href='#'class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false' style='padding-top:0px;padding-bottom:0px;line-height:50px'><img src='".$steamprofile['avatar'].">'><span class='caret'></span></a><ul id='profilenav' class='dropdown-menu'><li><a href='?logout'>Logout</a></li></ul></li>";
-define('DB_HOST', 'eu-cdbr-west-01.cleardb.com');
-define('DB_NAME', 'heroku_1ed81913353afff');
-define('DB_USER','b16f3dd482fc76');
-define('DB_PASSWORD','d96171c8');
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'itemlist');
+define('DB_USER','root');
+define('DB_PASSWORD','');
 
         $con=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " .     mysqli_error());
         $db=mysqli_select_db($con,DB_NAME) or die("Failed to connect to MySQL: " . mysqli_error());

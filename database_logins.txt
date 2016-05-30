@@ -1,0 +1,38 @@
+define('DB_HOST', 'eu-cdbr-west-01.cleardb.com');
+define('DB_NAME', 'heroku_1ed81913353afff');
+define('DB_USER','b16f3dd482fc76');
+define('DB_PASSWORD','d96171c8');
+
+
+
+var pool    =    mysql.createPool({
+      connectionLimit   :   100,
+      host              :   'eu-cdbr-west-01.cleardb.com',
+      port              :   '3306',
+      user              :   'b16f3dd482fc76',
+      password          :   'd96171c8',
+      database          :   'heroku_1ed81913353afff',
+      datestrings       :   'DATETIME',
+      debug             :   false
+});
+
+
+
+
+define('DB_HOST', 'localhost');
+        define('DB_NAME', 'itemlist');
+        define('DB_USER','root');
+        define('DB_PASSWORD','');
+
+
+var pool    =    mysql.createPool({
+
+      connectionLimit   :   10000,
+      host              :   'localhost',
+      port              :   '3306',
+      user              :   'root',
+      password          :   '',
+      database          :   'itemlist',
+      datestrings       :   'DATETIME',
+      debug             :   false
+});
