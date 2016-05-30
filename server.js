@@ -6,12 +6,7 @@ var io        =     require("socket.io").listen(http);
 var dateFormat= require("dateformat");
 var price=0;
 var steamid="";
-
 http.listen(process.env.PORT||5000);
-
-
-
-
 
 
 var timeresponse={itemid: "", tmerid:"", newendtime:"", currentprice:"", currentownerid:"", currentownderavatar:"", steamname:"", success:"false"};
@@ -44,8 +39,8 @@ app.get("/",function(req,res){
 
 io.on('connection',function(socket){  
     console.log("A user is connected");
-    socket.on('status added',function(status){
-      add_status(status,function(res){
+    socket.on('status added',function(status){   
+        add_status(status,function(res){
         if(res){
             timeresponse.itemid=status.itemid;
             timeresponse.tmerid=status.tmerid;
@@ -55,9 +50,27 @@ io.on('connection',function(socket){
         } else {
             io.emit('error');
         }
-      });
+      });  
+         
+        
     });
 });
+
+
+var checkAuth = function(status, callback) {
+    var realuser=true;
+    pool.getConnection(function(err,connection){
+        connection.query("SELECT * FROM users WHERE steamid="+status.steamid+" AND phpsessid="+status.auth, function(err,rows){
+            if(rows.length=0){
+
+        
+            }else{
+
+            
+            }
+        });
+    });
+}
 
 var add_status = function (status,callback) {
     pool.getConnection(function(err,connection){
@@ -66,13 +79,23 @@ var add_status = function (status,callback) {
           callback(false);
           return;
         }
-            connection.query("UPDATE itemlist SET Endtime=DATE_ADD(Endtime, INTERVAL 10 second) WHERE Endtime IS NOT NULL AND itemid="+status.itemid+" AND itemactive=0",function(err,rows){
+connection.query("SELECT * FROM users WHERE steamid="+status.steamid+" AND phpsessid='"+status.auth+"'", function(err,rows){
+    
+    console.log("SELECT * FROM users WHERE steamid="+status.steamid+" AND phpsessid='"+status.auth+"'");
+    console.log(rows);
+            if(rows.length<1){
+                io.emit('auth fail');
+        
+            }else{
+                connection.query("UPDATE itemlist SET Endtime=DATE_ADD(Endtime, INTERVAL 10 second) WHERE Endtime IS NOT NULL AND itemid="+status.itemid+" AND itemactive=0",function(err,rows){
             //connection.release();
             
             if(!err) {
               //callback(true);
             }
         });
+                
+                        
         
 
         
@@ -148,8 +171,16 @@ connection.query("SELECT currentownerid FROM itemlist WHERE itemid="+status.item
               callback(false);
               return;
         });
+    
+}    
+                
+            
+            
+        });
     });
+    
 }
+
 
 http.listen(3000,function(){
     console.log("Listening on 3000");
