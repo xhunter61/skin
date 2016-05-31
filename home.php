@@ -242,11 +242,8 @@ define('DB_PASSWORD','d96171c8');
                     }
     }); 
             
-<<<<<<< HEAD
-            var socket = io.connect("localhost:3000"); //change to localhost:3000
-=======
+
             var socket = io.connect("https://mighty-headland-94503.herokuapp.com/"); //change to localhost:3000
->>>>>>> 509843eebb57708efd3ca8428b894a6f9545284a
           $(document).on("click",".ph-button.ph-btn-red",function(){
               var id= this.id;
              console.log("CLICK "+id); 
