@@ -3,7 +3,7 @@
       margin: auto;
     }
 .item {
-      background: linear-gradient(141deg, #263238, #607D8B) fixed;
+      background: linear-gradient(141deg, #263238 40%, #e65100) fixed;
       width: 300px;
       height: 300px;
          border-color: #607D8B;  
@@ -27,7 +27,7 @@
     }
     body{
     background-color: #263238;
-    background: linear-gradient(141deg, #263238, #607D8B) fixed;
+    background: linear-gradient(141deg, #263238 40%, #e65100) fixed;
         color: #000;
   }
 .redTextColor{
